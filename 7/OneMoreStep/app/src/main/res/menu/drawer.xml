@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_labels"
+            android:title="Floating labels"/>
+
+        <item
+            android:id="@+id/drawer_fab"
+            android:title="Floating Action Button"/>
+
+        <item
+            android:id="@+id/drawer_snackbar"
+            android:title="Snackbar"/>
+
+        <item
+            android:id="@+id/drawer_coordinator"
+            android:title="Coordinator layout"/>
+
+    </group>
+
+</menu>
