@@ -132,6 +132,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Toast.makeText(this, "Yesh!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Yesh!", Toast.LENGTH_SHORT).show();
     }
 }

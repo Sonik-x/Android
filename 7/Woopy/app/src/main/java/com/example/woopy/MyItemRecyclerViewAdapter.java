@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.woopy.ItemFragment.OnListFragmentInteractionListener;
 import com.example.woopy.dummy.DummyContent.DummyItem;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
+                    Snackbar.make(v, holder.mItem.content, Snackbar.LENGTH_SHORT).show();
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }

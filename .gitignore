@@ -80,3 +80,12 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+2.1 ui/delta-connectit/
+2/delta-event-handling/
+3/the1-2/delta-activities/
+3/delta-activitylifecycle/
+5/listview/delta-listviews/
+6/delta-fragment-lifecycle/
+6/delta-fragments/
+7/Woopy/app/src/main/java/com/example/woopy/MainActivity.java
+7/Woopy/app/src/main/java/com/example/woopy/MyItemRecyclerViewAdapter.java
