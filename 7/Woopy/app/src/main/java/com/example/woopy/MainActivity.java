@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(fragment, "the 3");
-        viewPagerAdapter.addFragment(new ItemFragment(), "the Item");
+        viewPagerAdapter.addFragment(fragment, "text");
+        viewPagerAdapter.addFragment(new ItemFragment(), "item list");
         viewPagerAdapter.addFragment(new Fragment2(), "the 2");
 
         viewPager.setAdapter(viewPagerAdapter);
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 
@@ -169,20 +170,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        //Toast.makeText(this, "Yesh!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, item.content, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //saveTextFile(fragment.getText());
+        saveTextFile(fragment.getText());
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        fragment.setText("Yes!");
+        fragment.setText(getTextFile());
     }
 
     public void saveTextFile(String data) {
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                     fileOutputStream.close();
                 }
             } catch (IOException ex) {
-
+                ex.printStackTrace();
             }
         }
     }
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity
             result = new String(buff, StandardCharsets.UTF_8);
 
         } catch (IOException ex){
-
+                ex.printStackTrace();
         } finally {
             try {
                 if(fileInputStream != null){
@@ -233,4 +234,5 @@ public class MainActivity extends AppCompatActivity
 
         return result;
     }
+
 }

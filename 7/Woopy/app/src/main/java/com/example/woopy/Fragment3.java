@@ -15,16 +15,27 @@ import androidx.fragment.app.Fragment;
 
 
 public class Fragment3 extends Fragment {
+
+    View theView = null;
+    String theText = "";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fr1, container, false);
-        LinearLayout ll = (LinearLayout)view.findViewById(R.id.the_frag);
+        theView = inflater.inflate(R.layout.fr1, container, false);
+        LinearLayout ll = (LinearLayout)theView.findViewById(R.id.the_frag);
         ll.setBackgroundColor(getResources().getColor(R.color.c3));
+        setText(theText);
 
 
-        return view;
+        return theView;
     }
 
     @Override
@@ -34,18 +45,17 @@ public class Fragment3 extends Fragment {
     }
 
     public void setText(String text){
-        View view = getView();
-        if(view != null) {
-            EditText editText = getView().findViewById(R.id.text_from_user);
+        if(theView != null) {
+            EditText editText = theView.findViewById(R.id.text_from_user);
             editText.setText(text);
         }
+        theText = text;
     }
 
     public String getText() {
-        View view = getView();
         EditText editText = null;
-        if(view != null) {
-            editText = getView().findViewById(R.id.text_from_user);
+        if(theView != null) {
+            editText = theView.findViewById(R.id.text_from_user);
         }
         return editText.getText().toString();
     }
