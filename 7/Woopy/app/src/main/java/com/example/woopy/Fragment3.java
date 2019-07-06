@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,4 +26,28 @@ public class Fragment3 extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    public void setText(String text){
+        View view = getView();
+        if(view != null) {
+            EditText editText = getView().findViewById(R.id.text_from_user);
+            editText.setText(text);
+        }
+    }
+
+    public String getText() {
+        View view = getView();
+        EditText editText = null;
+        if(view != null) {
+            editText = getView().findViewById(R.id.text_from_user);
+        }
+        return editText.getText().toString();
+    }
+
 }
