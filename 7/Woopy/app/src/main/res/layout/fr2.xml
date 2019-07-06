@@ -1,21 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c2">
+    android:background="@color/c2"
+    android:weightSum="5"
+    android:padding="18dp"
+    >
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/nested_scroll"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <TableRow
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:gravity="center">
+        <TextView
+            android:textSize="36sp"
+            android:text="Date:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:textSize="36sp"
+            android:layout_weight="1"
+            android:text="6 July, 2019"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:gravity="center">
+        <TextView
+            android:textSize="36sp"
+            android:text="Max temperature:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_max_temp"
+            android:textSize="36sp"
+            android:layout_weight="1"
+            android:text="+200"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:gravity="center">
+        <TextView
+            android:textSize="36sp"
+            android:text="Min temperature:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_min_temp"
+            android:textSize="36sp"
+            android:layout_weight="1"
+            android:text="-200"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:gravity="center">
+        <TextView
+            android:textSize="36sp"
+            android:text="Atmospheric weight:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_atm_weight"
+            android:textSize="36sp"
+            android:layout_weight="1"
+            android:text="\???"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:gravity="center">
+        <TextView
+            android:textSize="36sp"
+            android:text="Weather:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_weather"
+            android:textSize="36sp"
+            android:layout_weight="1"
+            android:text="Cloudy"/>
+    </TableRow>
 
 
-    </androidx.core.widget.NestedScrollView>
 
 
 
-
-</LinearLayout>
+</TableLayout>

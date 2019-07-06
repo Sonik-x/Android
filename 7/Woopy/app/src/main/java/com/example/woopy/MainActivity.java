@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Toast.makeText(this, item.content, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, item.content, Toast.LENGTH_SHORT).show();
     }
 
     @Override
