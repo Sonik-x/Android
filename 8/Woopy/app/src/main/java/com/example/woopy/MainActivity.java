@@ -1,8 +1,11 @@
 package com.example.woopy;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.woopy.dummy.DummyContent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -20,14 +23,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ItemFragment.OnListFragmentInteractionListener {
 
+    final static String FILE_NAME = "file_name";
     ViewPager viewPager;
+    int runsNumber;
+    final String HOW_MUCH_STARTS_KEY = "should not see that";
+    SharedPreferences sharedPreferences;
+
+    Fragment3 fragment = new Fragment3();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +63,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-         viewPager = (ViewPager) findViewById(R.id.view_pager);
-         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new Fragment3(), "the 3");
-        viewPagerAdapter.addFragment(new Fragment1(), "the 1");
+        viewPagerAdapter.addFragment(fragment, "text");
+        viewPagerAdapter.addFragment(new ItemFragment(), "item list");
         viewPagerAdapter.addFragment(new Fragment2(), "the 2");
 
         viewPager.setAdapter(viewPagerAdapter);
@@ -73,6 +91,28 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
+        int defalt = 0;
+        runsNumber = sharedPreferences.getInt(HOW_MUCH_STARTS_KEY, defalt);
+
+        View header = navigationView.getHeaderView(0);
+
+
+        TextView howMuchStartsTV = header.findViewById(R.id.entersNumber);
+        if (runsNumber == 0) {
+            howMuchStartsTV.setText("Welcome for your first time!");
+            Snackbar.make(findViewById(android.R.id.content), "Message for a new user", Snackbar.LENGTH_INDEFINITE).show();
+        } else {
+            howMuchStartsTV.setText("You did open this app for " + runsNumber + " times! Thanks for your interest =)");
+        }
+        runsNumber++;
+
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(HOW_MUCH_STARTS_KEY, runsNumber);
+        edit.apply();
 
 
     }
@@ -127,4 +167,72 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        //Toast.makeText(this, item.content, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveTextFile(fragment.getText());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fragment.setText(getTextFile());
+    }
+
+    public void saveTextFile(String data) {
+
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fileOutputStream.write(data.getBytes());
+        } catch (FileNotFoundException ex) {
+
+        } catch (IOException ex) {
+
+        } finally {
+            try {
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public String getTextFile() {
+        FileInputStream fileInputStream = null;
+        String result = "";
+
+        try{
+            fileInputStream = openFileInput(FILE_NAME);
+            int kamut = fileInputStream.available();
+            byte[] buff = new byte[kamut];
+            fileInputStream.read(buff);
+            result = new String(buff, StandardCharsets.UTF_8);
+
+        } catch (IOException ex){
+                ex.printStackTrace();
+        } finally {
+            try {
+                if(fileInputStream != null){
+                    fileInputStream.close();
+                }
+            } catch (IOException ex){
+
+            }
+        }
+
+
+        return result;
+    }
+
 }
