@@ -3,6 +3,7 @@ package com.example.woopy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.example.woopy.dummy.DummyContent;
@@ -37,7 +38,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ItemFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ItemFragment.OnListFragmentInteractionListener,
+                        DownloadCB
+{
+    static String WEATHER_URL = "https://community-open-weather-map.p.rapidapi.com/weather?callback=test&id=2172797&units=%22metric%22+or+%22imperial%22&mode=xml%2C+html&q=London%2Cuk";
+
+    private Fragment2 networkFragment;
+    private boolean downloading = false;
+
 
     final static String FILE_NAME = "file_name";
     ViewPager viewPager;
@@ -66,9 +74,11 @@ public class MainActivity extends AppCompatActivity
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        networkFragment = Fragment2.getInstance(getSupportFragmentManager(), WEATHER_URL);
+
         viewPagerAdapter.addFragment(fragment, "text");
         viewPagerAdapter.addFragment(new ItemFragment(), "item list");
-        viewPagerAdapter.addFragment(new Fragment2(), "the 2");
+        viewPagerAdapter.addFragment(networkFragment, "coming..?");
 
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -235,4 +245,32 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
+
+    @Override
+    public void updateFromDownload(Object result) {
+
+    }
+
+    @Override
+    public NetworkInfo getActiveNetworkInfo() {
+        return null;
+    }
+
+    @Override
+    public void onProgressUpdate(int progressCode, int percentComplete) {
+
+    }
+
+    @Override
+    public void finishDownloading() {
+
+    }
+
+    private void startDownload() {
+        if (!downloading && networkFragment != null) {
+            // Execute the async download.
+            networkFragment.startDownload();
+            downloading = true;
+        }
+    }
 }
